@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dla Marty ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        /* Dynamiczne tło */
+        body {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden; 
+            transition: background 1s ease-in-out;
+            padding: 20px;
+        }
+
+        body.theme-pink { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); }
+        body.theme-blue { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
+        body.theme-purple { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+
+        /* Szklana Karta */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.4);
+            backdrop-filter: blur(15px);
+            -webkit-backdrop-filter: blur(15px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            border-radius: 20px;
+            padding: 40px 30px;
+            width: 100%;
+            max-width: 450px;
+            box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+            text-align: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        h1 { color: #444; font-size: 24px; margin-bottom: 10px; font-weight: 600; }
+        p { color: #555; font-size: 15px; margin-bottom: 20px; line-height: 1.5; }
+
+        .stats-box {
+            background: rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 15px 0;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+        }
+        .countdown { font-size: 20px; font-weight: 600; color: #ff5e7e; margin-top: 5px; }
+
+        /* Slajdy */
+        .slide { display: none; animation: fadeIn 0.5s ease; }
+        .slide.active { display: block; }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Przyciski */
+        .option-btn {
+            display: block;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.7);
+            color: #444;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 15px;
+            border-radius: 15px;
+            margin: 10px 0;
+            font-size: 15px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .option-btn:hover, .option-btn:active {
+            background: rgba(255, 255, 255, 0.9);
+            transform: scale(1.02);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .primary-btn {
+            background: #ff5e7e;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.3s;
+            width: 100%;
+            margin-top: 10px;
+            box-shadow: 0 4px 15px rgba(255, 94, 126, 0.3);
+        }
+        .primary-btn:hover { background: #ff476a; transform: translateY(-2px); }
+
+        /* List */
+        .letter-content {
+            font-style: italic;
+            font-size: 15px;
+            line-height: 1.8;
+            text-align: left;
+            padding: 25px;
+            background: rgba(255, 255, 255, 0.6);
+            border-left: 4px solid #ff5e7e;
+            border-radius: 10px;
+            color: #333;
+        }
+
+        /* Stopka */
+        .footer {
+            margin-top: 30px;
+            font-size: 13px;
+            color: rgba(0, 0, 0, 0.5);
+            z-index: 5;
+        }
+        .secret-heart { cursor: pointer; user-select: none; font-size: 16px; }
+
+        /* Panel Admina */
+        #admin-login { display: none; margin-top: 20px; }
+        #admin-login input {
+            padding: 10px;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            width: 80%;
+            margin-bottom: 10px;
+        }
+        
+        .admin-table-container {
+            max-height: 350px;
+            overflow-y: auto;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 10px;
+            padding: 10px;
+            margin-top: 15px;
+        }
+        table { width: 100%; text-align: left; border-collapse: collapse; }
+        th, td { padding: 10px; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 13px; color: #333; }
+        th { font-weight: 600; }
+
+        /* Kropki postępu */
+        .progress-dots {
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+            gap: 5px;
+        }
+        .dot { width: 8px; height: 8px; background: rgba(0,0,0,0.1); border-radius: 50%; }
+        .dot.active { background: #ff5e7e; width: 12px; border-radius: 10px; }
+    </style>
+</head>
+<body class="theme-pink" id="main-body">
+
+    <div class="glass-card">
+        
+        <!-- SLAJD 0: POWITANIE -->
+        <div id="slide-0" class="slide active">
+            <h1>Tęsknię za Tobą! 🥺</h1>
+            <div class="stats-box">
+                <p style="margin-bottom: 5px; font-size: 14px;">Dzieli nas:</p>
+                <strong>225 kilometrów</strong>
+                <p style="font-size: 12px; margin: 0; color: #777;">(ale to tylko liczba!)</p>
+            </div>
+            <div class="stats-box">
+                <p style="margin-bottom: 5px; font-size: 14px;">Widzimy się za:</p>
+                <div id="countdown" class="countdown">Liczenie...</div>
+            </div>
+            <p>Mam dla Ciebie mały prezent, ale najpierw musisz odpowiedzieć na kilka pytań.</p>
+            <button class="primary-btn" onclick="nextSlide(1)">Zaczynamy!</button>
+        </div>
+
+        <!-- SLAJD 1: NASTRÓJ -->
+        <div id="slide-1" class="slide">
+            <h1>Jak się dzisiaj czujesz? ☁️</h1>
+            <p>Wybierz szczerze, to wpłynie na wygląd strony.</p>
+            <button class="option-btn" onclick="setMood('pink', 'Bardzo dobrze, uśmiecham się', 2)">✨ Bardzo dobrze, uśmiecham się</button>
+            <button class="option-btn" onclick="setMood('blue', 'Tęsknię i jest mi smutno', 2)">🌧️ Tęsknię i jest mi trochę smutno</button>
+            <button class="option-btn" onclick="setMood('purple', 'Jestem zmęczona', 2)">🌙 Jestem zmęczona po całym dniu</button>
+        </div>
+
+        <!-- SLAJDY 2-12: QUIZ -->
+        <div id="slide-2" class="slide">
+            <div class="progress-dots"><div class="dot active"></div><div class="dot"></div><div class="dot"></div></div>
+            <h1>Pytanie 2/12</h1>
+            <p>Co robimy w pierwszych minutach po spotkaniu?</p>
+            <button class="option-btn" onclick="saveAnswer(2, 'Długi, mocny przytulas')">Długi, mocny przytulas</button>
+            <button class="option-btn" onclick="saveAnswer(2, 'Idziemy na dobre jedzenie')">Idziemy na dobre jedzenie</button>
+            <button class="option-btn" onclick="saveAnswer(2, 'Kładziemy się i odpoczywamy')">Kładziemy się i odpoczywamy</button>
+        </div>
+
+        <div id="slide-3" class="slide">
+            <div class="progress-dots"><div class="dot"></div><div class="dot active"></div><div class="dot"></div></div>
+            <h1>Pytanie 3/12</h1>
+            <p>Za czym najbardziej tęsknisz?</p>
+            <button class="option-btn" onclick="saveAnswer(3, 'Za naszymi rozmowami na żywo')">Za naszymi rozmowami na żywo</button>
+            <button class="option-btn" onclick="saveAnswer(3, 'Za zasypianiem obok siebie')">Za zasypianiem obok siebie</button>
+            <button class="option-btn" onclick="saveAnswer(3, 'Za Twoim poczuciem humoru')">Za Twoim poczuciem humoru</button>
+        </div>
+
+        <div id="slide-4" class="slide">
+            <h1>Pytanie 4/12</h1>
+            <p>Co wybierasz na nasz pierwszy wspólny wieczór?</p>
+            <button class="option-btn" onclick="saveAnswer(4, 'Zamawiamy pizzę i włączamy film')">Zamawiamy pizzę i włączamy film</button>
+            <button class="option-btn" onclick="saveAnswer(4, 'Idziemy na spacer')">Idziemy na spacer</button>
+            <button class="option-btn" onclick="saveAnswer(4, 'Gotujemy coś razem')">Gotujemy coś razem</button>
+        </div>
+
+        <div id="slide-5" class="slide">
+            <h1>Pytanie 5/12</h1>
+            <p>Gdybyśmy mieli teraz gdzieś wyjechać, to...</p>
+            <button class="option-btn" onclick="saveAnswer(5, 'W góry, na szlak')">W góry, na szlak</button>
+            <button class="option-btn" onclick="saveAnswer(5, 'Do jakiegoś fajnego miasta')">Do jakiegoś fajnego miasta</button>
+            <button class="option-btn" onclick="saveAnswer(5, 'Zostajemy w łóżku pod kocem')">Zostajemy w łóżku pod kocem</button>
+        </div>
+
+        <div id="slide-6" class="slide">
+            <h1>Pytanie 6/12</h1>
+            <p>Kto z nas zazwyczaj szybciej zasypia podczas wieczornych rozmów?</p>
+            <button class="option-btn" onclick="saveAnswer(6, 'Zdecydowanie ja')">Zdecydowanie ja</button>
+            <button class="option-btn" onclick="saveAnswer(6, 'Oczywiście, że Ty')">Oczywiście, że Ty</button>
+            <button class="option-btn" onclick="saveAnswer(6, 'Walczymy ze snem po równo do samego końca')">Walczymy ze snem po równo do samego końca</button>
+        </div>
+
+        <div id="slide-7" class="slide">
+            <h1>Pytanie 7/12</h1>
+            <p>Co najbardziej poprawia Ci humor, gdy masz gorszy dzień? 🌥️</p>
+            <button class="option-btn" onclick="saveAnswer(7, 'Kiedy po prostu dzwonisz, żeby usłyszeć mój głos 📞')">Kiedy po prostu dzwonisz, żeby usłyszeć mój głos 📞</button>
+            <button class="option-btn" onclick="saveAnswer(7, 'Kiedy wysyłasz mi coś uroczego albo śmiesznego 🥰')">Kiedy wysyłasz mi coś uroczego albo śmiesznego 🥰</button>
+            <button class="option-btn" onclick="saveAnswer(7, 'Sama świadomość, że niedługo się zobaczymy ⏳')">Sama świadomość, że niedługo się zobaczymy ⏳</button>
+        </div>
+
+        <div id="slide-8" class="slide">
+            <h1>Pytanie 8/12</h1>
+            <p>Jaki film odpalimy na nasz pierwszy wspólny seans, kiedy już się zobaczymy?</p>
+            <button class="option-btn" onclick="saveAnswer(8, 'Jakąś lekką komedię na rozluźnienie')">Jakąś lekką komedię na rozluźnienie</button>
+            <button class="option-btn" onclick="saveAnswer(8, 'Coś trzymającego w napięciu')">Coś trzymającego w napięciu</button>
+            <button class="option-btn" onclick="saveAnswer(8, 'Ty coś wybierzesz, a ja postaram się nie zasnąć')">Ty coś wybierzesz, a ja postaram się nie zasnąć</button>
+        </div>
+
+        <div id="slide-9" class="slide">
+            <h1>Pytanie 9/12</h1>
+            <p>Czego najbardziej brakuje Ci w wiadomościach?</p>
+            <button class="option-btn" onclick="saveAnswer(9, 'Słyszenia Twojego głosu')">Słyszenia Twojego głosu</button>
+            <button class="option-btn" onclick="saveAnswer(9, 'Tego, że nie mogę Cię od razu przytulić')">Tego, że nie mogę Cię od razu przytulić</button>
+            <button class="option-btn" onclick="saveAnswer(9, 'Widzenia Twojej reakcji na żywo')">Widzenia Twojej reakcji na żywo</button>
+        </div>
+
+        <div id="slide-10" class="slide">
+            <h1>Pytanie 10/12</h1>
+            <p>Co w ciągu dnia sprawia, że od razu o mnie myślisz?</p>
+            <button class="option-btn" onclick="saveAnswer(10, 'Kiedy widzę na ekranie powiadomienie z Twoim imieniem')">Kiedy widzę na ekranie powiadomienie z Twoim imieniem</button>
+            <button class="option-btn" onclick="saveAnswer(10, 'Kiedy trafię na coś, o czym ostatnio gadaliśmy')">Kiedy trafię na coś, o czym ostatnio gadaliśmy</button>
+            <button class="option-btn" onclick="saveAnswer(10, 'Kiedy przypomni mi się jakiś nasz żart')">Kiedy przypomni mi się jakiś nasz żart</button>
+        </div>
+
+        <div id="slide-11" class="slide">
+            <h1>Pytanie 11/12</h1>
+            <p>Kiedy najbardziej uświadamiasz sobie, że tęsknisz?</p>
+            <button class="option-btn" onclick="saveAnswer(11, 'Gdy wydarzy się coś śmiesznego i chcę Ci o tym powiedzieć')">Gdy wydarzy się coś śmiesznego...</button>
+            <button class="option-btn" onclick="saveAnswer(11, 'Wieczorem, gdy kładę się spać')">Wieczorem, gdy kładę się spać</button>
+            <button class="option-btn" onclick="saveAnswer(11, 'Kiedy widzę inne pary')">Kiedy widzę inne pary</button>
+        </div>
+
+        <div id="slide-12" class="slide">
+            <h1>Pytanie 12/12</h1>
+            <p>Jesteś gotowa na niespodziankę?</p>
+            <button class="option-btn" onclick="finishQuiz('Zdecydowanie tak!')">Zdecydowanie tak!</button>
+            <button class="option-btn" onclick="finishQuiz('Pokaż mi ją wreszcie!')">Pokaż mi ją wreszcie!</button>
+            <button class="option-btn" onclick="finishQuiz('Czekam z niecierpliwością')">Czekam z niecierpliwością</button>
+        </div>
+
+        <!-- SLAJD 13: LIST -->
+        <div id="slide-13" class="slide">
+            <h1>Dla Ciebie 💌</h1>
+            <div class="letter-content">
+                Nie wiem, czy da się przyzwyczaić do tego, że osoba, z którą najbardziej chce się być, jest czasem kilka godzin drogi stąd.<br><br>
+                Są dni, kiedy ta odległość w ogóle nie przeszkadza. I są takie, kiedy chciałoby się po prostu usiąść obok Ciebie. Bez planu, bez powodu, bez pożegnań.<br><br>
+                Ale wiem jedno. Mimo tych wszystkich kilometrów jesteś jedną z najbliższych mi osób. Rozmawiamy o wszystkim i o niczym, i nawet najzwyklejszy dzień robi się lepszy, kiedy jesteś w nim Ty, choćby na ekranie telefonu.<br><br>
+                Piszę, bo najprostsze rzeczy najtrudniej mówi się na głos.<br><br>
+                Dobrze, że jesteś.😘
+            </div>
+            <p style="margin-top: 20px; font-size: 13px;">Koniec quizu. Twoje odpowiedzi zostały zapisane. ❤️</p>
+        </div>
+
+        <!-- SLAJD 14: PANEL ADMINA (Ukryty) -->
+        <div id="slide-admin" class="slide">
+            <h1>🕵️‍♂️ Panel Admina</h1>
+            <div id="admin-login">
+                <p>Wpisz hasło dostępu:</p>
+                <input type="password" id="admin-pass" placeholder="Hasło...">
+                <button class="primary-btn" onclick="checkPassword()">Zaloguj</button>
+            </div>
+            <div id="admin-dashboard" style="display: none;">
+                <p>Oto odpowiedzi Marty z bazy danych:</p>
+                <div class="admin-table-container">
+                    <table>
+                        <thead>
+                            <tr><th>Pytanie</th><th>Odpowiedź</th></tr>
+                        </thead>
+                        <tbody id="admin-answers">
+                            <!-- Odpowiedzi z Firebase -->
+                        </tbody>
+                    </table>
+                </div>
+                <button class="primary-btn" onclick="location.reload()" style="background: #444; margin-top: 20px;">Wyjdź z panelu</button>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- STOPKA Z UKRYTYM PRZYCISKIEM -->
+    <div class="footer">
+        Stworzone z <span class="secret-heart" onclick="triggerAdmin()">❤️</span> dla Marty
+    </div>
+
+    <!-- SKRYPTY LOGIKI I FIREBASE -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
+        import { getFirestore, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
+
+        // 1. Twoja Konfiguracja Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyCNRAYPh0ncHCM2xOr2gQOk4YPDU1oYiOI",
+            authDomain: "marta-prezent.firebaseapp.com",
+            projectId: "marta-prezent",
+            storageBucket: "marta-prezent.firebasestorage.app",
+            messagingSenderId: "177881257053",
+            appId: "1:177881257053:web:ddb2861cba4e01562ba9b4",
+            measurementId: "G-LDWBXZ56Y1"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        // --- ODLICZANIE CZASU ---
+        const meetingDate = new Date('2026-10-17T18:00:00').getTime(); // Data i godzina spotkania
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = meetingDate - now;
+            if (distance < 0) {
+                document.getElementById("countdown").innerHTML = "JUŻ SIĘ WIDZIMY! 🎉";
+                return;
+            }
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            document.getElementById("countdown").innerHTML = days + "d " + hours + "h " + minutes + "m " + seconds + "s ";
+        }, 1000);
+
+        // --- GLOBALNE FUNKCJE UI ---
+        let currentAnswers = {}; 
+
+        window.nextSlide = function(slideNumber) {
+            document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+            document.getElementById('slide-' + slideNumber).classList.add('active');
+        };
+
+        window.setMood = function(colorTheme, answerText, nextSlideNum) {
+            document.getElementById('main-body').className = 'theme-' + colorTheme;
+            currentAnswers['Q1'] = answerText;
+            window.nextSlide(nextSlideNum);
+        };
+
+        window.saveAnswer = function(questionNumber, answerText) {
+            currentAnswers['Q' + questionNumber] = answerText;
+            window.nextSlide(questionNumber + 1);
+        };
+
+        window.finishQuiz = async function(answerText) {
+            currentAnswers['Q12'] = answerText;
+            currentAnswers['timestamp'] = new Date().toLocaleString('pl-PL'); // Dodanie daty rozwiązania quizu
+            
+            // Zapis do Firebase Firestore w tle
+            try {
+                await setDoc(doc(db, "odpowiedzi", "marta"), currentAnswers);
+                console.log("Zapisano pomyślnie w bazie!");
+            } catch (e) {
+                console.error("Błąd zapisu do bazy: ", e);
+            }
+            
+            window.nextSlide(13);
+        };
+
+        // --- PANEL ADMINA ---
+        let clicks = 0;
+        window.triggerAdmin = function() {
+            clicks++;
+            if (clicks === 5) {
+                clicks = 0;
+                document.querySelectorAll('.slide').forEach(el => el.classList.remove('active'));
+                document.getElementById('slide-admin').classList.add('active');
+                document.getElementById('admin-login').style.display = 'block';
+                document.getElementById('admin-dashboard').style.display = 'none';
+            }
+        };
+
+        window.checkPassword = async function() {
+            const pass = document.getElementById('admin-pass').value;
+            if (pass === 'kocham') { // Hasło do admina
+                document.getElementById('admin-login').style.display = 'none';
+                document.getElementById('admin-dashboard').style.display = 'block';
+                await loadAdminAnswers();
+            } else {
+                alert('Błędne hasło!');
+            }
+        };
+
+        async function loadAdminAnswers() {
+            const tbody = document.getElementById('admin-answers');
+            tbody.innerHTML = '<tr><td colspan="2" style="text-align: center;">Ładowanie z chmury... ☁️</td></tr>';
+
+            const pytania = [
+                "1. Nastrój", "2. Pierwsze minuty", "3. Tęsknota", "4. Wspólny wieczór",
+                "5. Wyjazd", "6. Kto zasypia", "7. Poprawa humoru", "8. Pierwszy film",
+                "9. Czego brakuje", "10. Kiedy o mnie myśli", "11. Kiedy tęskni", "12. Niespodzianka"
+            ];
+
+            try {
+                const docRef = doc(db, "odpowiedzi", "marta");
+                const docSnap = await getDoc(docRef);
+
+                tbody.innerHTML = ''; 
+                if (docSnap.exists()) {
+                    const data = docSnap.data();
+                    const dataWypelnienia = data.timestamp ? data.timestamp : "Brak daty zapisu";
+                    
+                    // Wyświetlenie daty wypełnienia w tabeli
+                    tbody.innerHTML += `<tr><td colspan="2" style="text-align: center; font-size: 11px; color: #666; background: rgba(0,0,0,0.03);">Data wypełnienia: ${dataWypelnienia}</td></tr>`;
+                    
+                    for (let i = 1; i <= 12; i++) {
+                        const odp = data['Q' + i] || "Brak odpowiedzi";
+                        tbody.innerHTML += `<tr><td>${pytania[i-1]}</td><td>${odp}</td></tr>`;
+                    }
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="2" style="text-align: center;">Marta jeszcze nie rozwiązała quizu!</td></tr>';
+                }
+            } catch (e) {
+                tbody.innerHTML = '<tr><td colspan="2" style="text-align: center; color: red;">Błąd łączenia z bazą!</td></tr>';
+                console.error("Błąd pobierania bazy:", e);
+            }
+        }
+    </script>
+</body>
+</html>
