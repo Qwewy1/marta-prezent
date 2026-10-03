@@ -16,7 +16,7 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
 // --- ODLICZANIE CZASU ---
-const meetingDate = new Date('2026-10-17T18:00:00').getTime();
+const meetingDate = new Date('2026-10-17T08:49:00').getTime();
 setInterval(function() {
     const now = new Date().getTime();
     const distance = meetingDate - now;
