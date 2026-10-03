@@ -1,0 +1,251 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Dynamiczne tło */
+body {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow-x: hidden; 
+    overflow-y: auto;
+    transition: background 1s ease-in-out;
+    padding: 15px;
+}
+
+body.theme-pink { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 99%, #fecfef 100%); }
+body.theme-blue { background: linear-gradient(135deg, #a1c4fd 0%, #c2e9fb 100%); }
+body.theme-purple { background: linear-gradient(135deg, #e0c3fc 0%, #8ec5fc 100%); }
+
+/* --- PŁYWAJĄCE LILIE W TLE --- */
+.lily-container {
+    position: fixed;
+    z-index: 1;
+    pointer-events: none;
+    opacity: 0.5; 
+}
+.lc-1 { top: 3%; left: 3%; width: 65px; height: 65px; transform: rotate(-20deg); }
+.lc-2 { bottom: 5%; left: 3%; width: 80px; height: 80px; transform: rotate(15deg); }
+.lc-3 { top: 5%; right: 3%; width: 70px; height: 70px; transform: rotate(25deg); }
+.lc-4 { bottom: 3%; right: 5%; width: 60px; height: 60px; transform: rotate(-15deg); }
+
+.lily-container svg {
+    width: 100%;
+    height: 100%;
+    animation: sway 6s infinite ease-in-out;
+    filter: drop-shadow(0px 4px 6px rgba(0,0,0,0.1));
+}
+.lc-1 svg { animation-delay: 0s; }
+.lc-2 svg { animation-delay: 2s; }
+.lc-3 svg { animation-delay: 4s; }
+.lc-4 svg { animation-delay: 1s; }
+
+@keyframes sway {
+    0%, 100% { transform: translateY(0) translateX(0); }
+    50% { transform: translateY(-10px) translateX(3px); }
+}
+
+/* Szklana Karta */
+.glass-card {
+    background: rgba(255, 255, 255, 0.45);
+    backdrop-filter: blur(15px);
+    -webkit-backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.4);
+    border-radius: 20px;
+    padding: 25px 20px;
+    width: 100%;
+    max-width: 450px;
+    box-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.15);
+    text-align: center;
+    position: relative;
+    z-index: 10;
+    margin: auto;
+}
+
+h1 { color: #444; font-size: 22px; margin-bottom: 8px; font-weight: 600; }
+p { color: #555; font-size: 14px; margin-bottom: 15px; line-height: 1.4; }
+
+.stats-box {
+    background: rgba(255, 255, 255, 0.5);
+    padding: 12px;
+    border-radius: 15px;
+    margin: 12px 0;
+    border: 1px solid rgba(255, 255, 255, 0.4);
+}
+.countdown { font-size: 18px; font-weight: 600; color: #ff5e7e; margin-top: 5px; }
+
+/* Slajdy */
+.slide { display: none; animation: fadeIn 0.4s ease; }
+.slide.active { display: block; }
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Przyciski i pola tekstowe */
+.option-btn {
+    display: block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.75);
+    color: #444;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    padding: 14px;
+    border-radius: 14px;
+    margin: 8px 0;
+    font-size: 14px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    text-align: left;
+    -webkit-tap-highlight-color: transparent;
+}
+.option-btn:hover, .option-btn:active {
+    background: rgba(255, 255, 255, 0.95);
+    transform: scale(1.01);
+}
+
+.primary-btn {
+    background: #ff5e7e;
+    color: white;
+    border: none;
+    padding: 14px 20px;
+    border-radius: 25px;
+    font-size: 15px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 100%;
+    margin-top: 10px;
+    box-shadow: 0 4px 15px rgba(255, 94, 126, 0.3);
+    -webkit-tap-highlight-color: transparent;
+}
+.primary-btn:hover { background: #ff476a; }
+
+/* Styl dla własnych odpowiedzi */
+.or-divider {
+    margin: 12px 0 4px 0;
+    font-size: 11px;
+    color: #666;
+    text-align: center;
+}
+.custom-input-container {
+    display: flex;
+    gap: 8px;
+    margin-top: 6px;
+}
+.custom-input {
+    flex: 1;
+    padding: 11px;
+    border-radius: 12px;
+    border: 1px solid rgba(255, 255, 255, 0.6);
+    background: rgba(255, 255, 255, 0.7);
+    font-size: 14px;
+    color: #444;
+    outline: none;
+    transition: 0.3s;
+}
+.custom-input:focus {
+    background: rgba(255, 255, 255, 0.95);
+}
+.custom-btn {
+    background: #ff5e7e;
+    color: white;
+    border: none;
+    padding: 11px 16px;
+    border-radius: 12px;
+    font-size: 13px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    -webkit-tap-highlight-color: transparent;
+}
+.custom-btn:hover { background: #ff476a; }
+
+/* BUKIET LILII W LIŚCIE */
+.bouquet-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 5px 0 15px 0;
+    position: relative;
+    height: 80px;
+}
+.bouquet-lily {
+    position: absolute;
+    width: 70px;
+    height: 70px;
+    filter: drop-shadow(0px 3px 6px rgba(0,0,0,0.15));
+}
+.bl-1 { transform: rotate(-35deg) translateX(-25px); z-index: 1; }
+.bl-2 { transform: rotate(0deg) translateY(-10px); z-index: 2; width: 85px; height: 85px; }
+.bl-3 { transform: rotate(35deg) translateX(25px); z-index: 1; }
+
+/* List z pełną obsługą dotyku i scrollowania */
+.letter-content {
+    font-style: italic;
+    font-size: 14px;
+    line-height: 1.7;
+    text-align: left;
+    padding: 20px;
+    background: rgba(255, 255, 255, 0.85);
+    border-left: 4px solid #ff5e7e;
+    border-radius: 10px;
+    color: #333;
+    max-height: 250px;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch; 
+    touch-action: pan-y;
+    overscroll-behavior: contain;
+}
+
+/* Stopka */
+.footer {
+    margin-top: 20px;
+    font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+    z-index: 5;
+}
+.secret-heart { cursor: pointer; user-select: none; font-size: 15px; }
+
+/* Panel Admina */
+#admin-login { display: none; margin-top: 15px; }
+#admin-login input {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    width: 80%;
+    margin-bottom: 10px;
+    font-size: 14px;
+}
+
+.admin-table-container {
+    max-height: 280px;
+    overflow-y: auto;
+    background: rgba(255, 255, 255, 0.85);
+    border-radius: 10px;
+    padding: 8px;
+    margin-top: 12px;
+}
+table { width: 100%; text-align: left; border-collapse: collapse; }
+th, td { padding: 8px; border-bottom: 1px solid rgba(0,0,0,0.1); font-size: 12px; color: #333; }
+th { font-weight: 600; }
+
+/* Kropki postępu */
+.progress-dots {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 15px;
+    gap: 5px;
+}
+.dot { width: 7px; height: 7px; background: rgba(0,0,0,0.1); border-radius: 50%; }
+.dot.active { background: #ff5e7e; width: 11px; border-radius: 8px; }
+
+@media (max-width: 380px) {
+    .glass-card { padding: 20px 15px; }
+    h1 { font-size: 20px; }
+    p, .option-btn { font-size: 13px; }
+}
